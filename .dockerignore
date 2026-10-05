@@ -1,0 +1,7 @@
+.git
+.gitignore
+backend/target
+backend/dependency-reduced-pom.xml
+frontend/node_modules
+*.log
+.DS_Store

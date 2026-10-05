@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: veloshield
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: PORT
+        value: 8080
+    healthCheckPath: /

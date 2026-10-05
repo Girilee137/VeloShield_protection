@@ -1,0 +1,29 @@
+# Maven build outputs
+backend/target/
+backend/dependency-reduced-pom.xml
+*.jar
+*.war
+
+# Eclipse / IDE metadata
+.classpath
+.project
+.settings/
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Node & package dependencies
+frontend/node_modules/
+package-lock.json
+
+# OS files & logs
+*.log
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Environment & local secret files
+.env
+.env.local

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloShield — Web Security, Performance & Deployment Readiness Assessment</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container flex justify-between items-center" style="height: 100%;">
+            <div class="nav-brand flex items-center gap-3" onclick="switchToSection('overview')">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.25)); border: 1px solid rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-glow">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="M12 8v4"></path>
+                        <path d="M12 16h.01"></path>
+                    </svg>
+                </div>
+                <span>VeloShield</span>
+                <span class="status-pill" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                    <span class="pulse-dot"></span> Online &bull; Neon DB
+                </span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-link active" data-nav="overview">Overview</button>
+                <button class="nav-link" data-nav="pre-deploy">Before Deployment</button>
+                <button class="nav-link" data-nav="post-deploy">After Deployment</button>
+                <button class="nav-link" data-nav="load-test">Resilience & Load</button>
+                <button class="nav-link" data-nav="history">History & Diffs</button>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2" style="background: rgba(255, 255, 255, 0.04); padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div class="user-avatar" id="user-avatar">VS</div>
+                    <span id="user-email" class="text-xs text-secondary" style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                </div>
+                <button id="logout-btn" class="btn btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 2rem; padding-bottom: 3rem;">
+        
+        <!-- SECTION 1: OVERVIEW / NEW HOME SCREEN -->
+        <section id="overview-section" class="dashboard-section active">
+            <div class="text-center" style="margin-bottom: 2.75rem;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #ffffff 20%, #a5b4fc 60%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    VeloShield Security & Readiness Platform
+                </h1>
+                <p class="text-secondary" style="font-size: 1.05rem; max-width: 680px; margin: 0 auto;">
+                    Automated, non-destructive web security, performance analysis, and pre-release readiness audits.
+                </p>
+                <h3 style="margin-top: 1.75rem; color: var(--text-primary); font-size: 1.2rem; font-weight: 600;">
+                    What would you like to assess?
+                </h3>
+            </div>
+
+            <!-- TWO PRIMARY DECISION CARDS -->
+            <div class="decision-grid">
+                <!-- BEFORE DEPLOYMENT CARD -->
+                <div class="decision-card pre-card">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="decision-icon icon-pre">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <span class="workflow-tag" style="background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.35);">
+                                STATIC AST & SECRETS
+                            </span>
+                        </div>
+                        <h2 style="font-size: 1.4rem; color: #c4b5fd; margin-bottom: 0.75rem;">BEFORE DEPLOYMENT</h2>
+                        <p class="text-secondary text-sm" style="line-height: 1.6; margin-bottom: 1.5rem;">
+                            Analyze your project before releasing it. Uncover hardcoded secrets, outdated dependencies, insecure configs, and API routes.
+                        </p>
+                        <div class="text-xs text-secondary" style="margin-bottom: 1.5rem; line-height: 1.8;">
+                            <span style="color: var(--accent-emerald)">✓</span> Source Code & Secret Masking &bull; 
+                            <span style="color: var(--accent-emerald)">✓</span> Dependencies (npm/pom/pip) &bull; 
+                            <span style="color: var(--accent-emerald)">✓</span> Security Configs
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="switchToSection('pre-deploy')" style="width: 100%; background: linear-gradient(135deg, #7c3aed, #6366f1); border: none; padding: 0.8rem;">
+                        Start Before-Deployment Scan
+                    </button>
+                </div>
+
+                <!-- AFTER DEPLOYMENT CARD -->
+                <div class="decision-card post-card">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="decision-icon icon-post">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </div>
+                            <span class="workflow-tag" style="background: rgba(6, 182, 212, 0.15); color: #7dd3fc; border: 1px solid rgba(6, 182, 212, 0.35);">
+                                LIVE TLS & TELEMETRY
+                            </span>
+                        </div>
+                        <h2 style="font-size: 1.4rem; color: #7dd3fc; margin-bottom: 0.75rem;">AFTER DEPLOYMENT</h2>
+                        <p class="text-secondary text-sm" style="line-height: 1.6; margin-bottom: 1.5rem;">
+                            Audit your live website safely for TLS encryption, HTTP security headers, cookie flags, CORS configuration, and latency metrics.
+                        </p>
+                        <div class="text-xs text-secondary" style="margin-bottom: 1.5rem; line-height: 1.8;">
+                            <span style="color: var(--accent-cyan)">✓</span> SSRF-Guarded Safe Probes &bull; 
+                            <span style="color: var(--accent-cyan)">✓</span> TLS, HSTS, CSP & Cookies &bull; 
+                            <span style="color: var(--accent-cyan)">✓</span> Third-Party & Ad Analysis
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="switchToSection('post-deploy')" style="width: 100%; background: linear-gradient(135deg, #0284c7, #06b6d4); border: none; padding: 0.8rem;">
+                        Start After-Deployment Scan
+                    </button>
+                </div>
+            </div>
+
+            <!-- OVERVIEW STATS -->
+            <div class="grid grid-cols-4 gap-6" style="margin-bottom: 2rem;">
+                <div class="card stat-card">
+                    <div class="text-sm text-secondary">Pre-Deployment Scans</div>
+                    <div id="stat-pre-scans" class="stat-value" style="color: var(--accent-violet)">0</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="text-sm text-secondary">Post-Deployment Scans</div>
+                    <div id="stat-post-scans" class="stat-value" style="color: var(--accent-cyan)">0</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="text-sm text-secondary">Resilience Tests</div>
+                    <div id="stat-load-tests" class="stat-value" style="color: var(--accent-blue)">0</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="text-sm text-secondary">Total Targets</div>
+                    <div id="stat-total-targets" class="stat-value">0</div>
+                </div>
+            </div>
+
+            <!-- RECENT ASSESSMENTS -->
+            <div class="card" style="padding: 0;">
+                <div class="flex justify-between items-center" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-color);">
+                    <h3>Recent Assessments</h3>
+                    <button class="btn btn-secondary" onclick="switchToSection('history')" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;">View All</button>
+                </div>
+                <div class="table-container">
+                    <table id="recent-assessments-table">
+                        <thead>
+                            <tr>
+                                <th>Workflow</th>
+                                <th>Target / Project</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Executed</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: BEFORE DEPLOYMENT WORKFLOW -->
+        <section id="pre-deploy-section" class="dashboard-section">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2>Workflow A: Before Deployment Assessment</h2>
+                    <p class="text-sm text-secondary">Safely inspect source code, dependencies, configs, APIs, and error patterns before publishing.</p>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <span class="text-xs text-secondary">Preset Samples:</span>
+                    <button type="button" class="quick-chip" onclick="loadSampleProject('vulnerable_node')">⚡ Node.js (Vulnerable)</button>
+                    <button type="button" class="quick-chip" onclick="loadSampleProject('clean_spring')">🛡️ Spring Boot (Clean)</button>
+                    <button type="button" class="quick-chip" onclick="loadSampleProject('python_flask')">🐍 Python (Flask)</button>
+                </div>
+            </div>
+
+            <div class="grid gap-6" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                <!-- PROJECT CONFIGURATION -->
+                <div class="card">
+                    <h3>1. Project Details & Files</h3>
+                    <form id="pre-deploy-form" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Project Name</label>
+                            <input type="text" id="pre-project-name" class="form-control" required placeholder="e.g., My Awesome App">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Select Project Files to Analyze</label>
+                            <div class="drop-zone" id="file-dropzone" onclick="document.getElementById('file-input').click()">
+                                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="var(--text-secondary)" stroke-width="2" style="margin-bottom: 0.5rem;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <div class="text-sm">Drag and drop project files here or <strong>browse</strong></div>
+                                <div class="text-xs text-secondary mt-2">Supports package.json, pom.xml, requirements.txt, pubspec.yaml, .js, .java, .env.example, .html, configs</div>
+                            </div>
+                            <input type="file" id="file-input" multiple style="display: none;">
+                        </div>
+
+                        <!-- Selected files container -->
+                        <div id="selected-files-list" style="margin-bottom: 1rem; min-height: 40px;">
+                            <span class="text-xs text-secondary">No files selected yet.</span>
+                        </div>
+
+                        <!-- Checkboxes for analysis modules -->
+                        <div class="form-group">
+                            <label class="form-label">Analysis Modules</label>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <label><input type="checkbox" id="chk-secrets" checked> Secret & Credential Detection</label>
+                                <label><input type="checkbox" id="chk-deps" checked> Dependency Vulnerabilities</label>
+                                <label><input type="checkbox" id="chk-config" checked> Security Configurations</label>
+                                <label><input type="checkbox" id="chk-api" checked> API Route Security</label>
+                                <label><input type="checkbox" id="chk-errors" checked> Error Handling & Leaks</label>
+                                <label><input type="checkbox" id="chk-frontend" checked> Frontend Asset Security</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="start-pre-scan-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background: linear-gradient(135deg, #7c3aed, #6366f1); border: none;">
+                            Start Safe Project Analysis
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SCAN PROGRESS & LIVE STATUS -->
+                <div class="card flex flex-col justify-between" id="pre-progress-card">
+                    <div>
+                        <h3>Analysis Progress</h3>
+                        <p class="text-xs text-secondary" style="margin-bottom: 1.5rem;">Static rule-based inspection across uploaded artifacts.</p>
+
+                        <div class="step-checklist" id="pre-checklist">
+                            <div class="step-item" id="step-pre-structure"><span class="step-icon">&#9675;</span> Project Structure & Syntax Inspection</div>
+                            <div class="step-item" id="step-pre-deps"><span class="step-icon">&#9675;</span> Dependency Vulnerability Audit</div>
+                            <div class="step-item" id="step-pre-secrets"><span class="step-icon">&#9675;</span> Hardcoded Secret & Key Detection</div>
+                            <div class="step-item" id="step-pre-config"><span class="step-icon">&#9675;</span> Security Configuration Baseline</div>
+                            <div class="step-item" id="step-pre-api"><span class="step-icon">&#9675;</span> API Routes & Authorization Logic</div>
+                            <div class="step-item" id="step-pre-errors"><span class="step-icon">&#9675;</span> Error Handling & Information Leakage</div>
+                            <div class="step-item" id="step-pre-score"><span class="step-icon">&#9675;</span> Deployment Readiness Score Calculation</div>
+                        </div>
+                    </div>
+
+                    <div id="pre-quick-score-preview" style="display: none; margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                        <span class="text-xs text-secondary uppercase font-bold">Analysis Complete</span>
+                        <div id="pre-preview-status" class="mt-2 text-sm font-bold"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRE-DEPLOYMENT RESULTS SECTION -->
+            <div id="pre-results-container" style="display: none;">
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                        <div>
+                            <h3 id="pre-results-project-title">Project Readiness Assessment</h3>
+                            <span id="pre-results-status-badge" class="badge"></span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn btn-secondary" onclick="downloadPreReport()" style="font-size: 0.8rem;">Download CSV</button>
+                            <button class="btn btn-secondary" onclick="window.print()" style="font-size: 0.8rem;">Print / PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4" style="margin-bottom: 2rem;">
+                        <div class="stat-card text-center" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="score-circle" id="pre-overall-circle">
+                                <span class="score-num" id="pre-score-overall">0</span>
+                                <span class="score-denom">/ 100</span>
+                            </div>
+                            <div class="text-xs text-secondary uppercase font-bold">Readiness Score</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">Security Score</div>
+                            <div id="pre-score-security" class="stat-value" style="font-size: 2rem; color: #60a5fa;">0</div>
+                            <div class="text-xs text-secondary mt-1">Credentials & Auth</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">Configuration Score</div>
+                            <div id="pre-score-config" class="stat-value" style="font-size: 2rem; color: #a78bfa;">0</div>
+                            <div class="text-xs text-secondary mt-1">CORS, Debug & Cookies</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">Dependencies Score</div>
+                            <div id="pre-score-deps" class="stat-value" style="font-size: 2rem; color: #34d399;">0</div>
+                            <div class="text-xs text-secondary mt-1">Package Vulnerabilities</div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.02); border-left: 4px solid var(--accent-violet); padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                        <strong class="text-sm">Recommendation: </strong>
+                        <span id="pre-summary-recommendation" class="text-sm text-secondary"></span>
+                    </div>
+
+                    <!-- Findings Table / Accordion -->
+                    <div class="flex justify-between items-center mb-3" style="flex-wrap: wrap; gap: 0.75rem;">
+                        <h4>Findings & Remediations (<span id="pre-findings-count">0</span>)</h4>
+                        <div class="flex gap-2 items-center">
+                            <div class="search-box">
+                                <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="pre-search-input" class="form-control" placeholder="Search findings..." oninput="filterFindingsBySearch('pre')">
+                            </div>
+                            <div class="flex gap-1 text-xs" id="pre-severity-filters">
+                                <button type="button" class="btn btn-secondary active" onclick="filterFindings('ALL')">ALL</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterFindings('CRITICAL')">CRITICAL</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterFindings('HIGH')">HIGH</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterFindings('MEDIUM')">MEDIUM</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterFindings('PASS')">PASS</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pre-findings-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: AFTER DEPLOYMENT WORKFLOW -->
+        <section id="post-deploy-section" class="dashboard-section">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2>Workflow B: After Deployment Assessment</h2>
+                    <p class="text-sm text-secondary">Safe, non-destructive audit of live public URLs for headers, cookies, TLS, CORS, API health, and latency.</p>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <span class="text-xs text-secondary">Quick Targets:</span>
+                    <button type="button" class="quick-chip" onclick="fillPostUrl('https://example.com')">example.com</button>
+                    <button type="button" class="quick-chip" onclick="fillPostUrl('https://httpbin.org')">httpbin.org</button>
+                    <button type="button" class="quick-chip" onclick="fillPostUrl('https://cloudflare.com')">cloudflare.com</button>
+                </div>
+            </div>
+
+            <div class="grid gap-6" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                <!-- URL INPUT CARD -->
+                <div class="card">
+                    <h3>1. Website Target</h3>
+                    <form id="post-deploy-form" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Live Website URL</label>
+                            <input type="url" id="post-target-url" class="form-control" required placeholder="https://your-live-website.com">
+                            <span class="text-xs text-secondary mt-1" style="display: block;">
+                                &bull; Safe non-destructive scans only. Requests restricted by SSRF protection filter.
+                            </span>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <div class="text-xs font-bold uppercase text-secondary mb-1">Safety Constraints</div>
+                            <ul class="text-xs text-secondary" style="padding-left: 1rem; line-height: 1.6;">
+                                <li>Strict SSRF protection: Localhost and private cloud IP ranges blocked.</li>
+                                <li>Non-mutating requests only: Safe GET & HEAD inspections.</li>
+                                <li>Zero intrusive fuzzing, zero exploitation, and bounded crawl depth.</li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" id="start-post-scan-btn" class="btn btn-primary" style="width: 100%; background: linear-gradient(135deg, #0284c7, #06b6d4); border: none;">
+                            Start Safe Website Scan
+                        </button>
+                    </form>
+                </div>
+
+                <!-- LIVE PROGRESS CHECKLIST -->
+                <div class="card flex flex-col justify-between" id="post-progress-card">
+                    <div>
+                        <h3>Live Telemetry Progress</h3>
+                        <p class="text-xs text-secondary" style="margin-bottom: 1.5rem;">Inspecting live server response attributes and telemetry.</p>
+
+                        <div class="step-checklist" id="post-checklist">
+                            <div class="step-item" id="step-post-ssrf"><span class="step-icon">&#9675;</span> SSRF & Destination IP Safety Validation</div>
+                            <div class="step-item" id="step-post-https"><span class="step-icon">&#9675;</span> HTTPS / TLS Encryption & Redirect Verification</div>
+                            <div class="step-item" id="step-post-headers"><span class="step-icon">&#9675;</span> Security Headers (HSTS, CSP, XFO, Permissions)</div>
+                            <div class="step-item" id="step-post-cookies"><span class="step-icon">&#9675;</span> Cookie Flags (Secure, HttpOnly, SameSite)</div>
+                            <div class="step-item" id="step-post-cors"><span class="step-icon">&#9675;</span> CORS Origin Reflection & Credentials Check</div>
+                            <div class="step-item" id="step-post-info"><span class="step-icon">&#9675;</span> Information Exposure & Fingerprint Banners</div>
+                            <div class="step-item" id="step-post-errors"><span class="step-icon">&#9675;</span> Error & 404 Page Diagnostic Probe</div>
+                            <div class="step-item" id="step-post-api"><span class="step-icon">&#9675;</span> Safe API Health & Auth Verification</div>
+                            <div class="step-item" id="step-post-perf"><span class="step-icon">&#9675;</span> Response Timing & Resource Breakdown</div>
+                            <div class="step-item" id="step-post-third"><span class="step-icon">&#9675;</span> Third-Party Domains & Ad Footprint</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POST-DEPLOYMENT RESULTS -->
+            <div id="post-results-container" style="display: none;">
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                        <div>
+                            <h3 id="post-results-url-title">Website Health Assessment</h3>
+                            <span id="post-results-status-badge" class="badge"></span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn btn-secondary" onclick="downloadPostReport()" style="font-size: 0.8rem;">Download CSV</button>
+                            <button class="btn btn-secondary" onclick="window.print()" style="font-size: 0.8rem;">Print / PDF</button>
+                        </div>
+                    </div>
+
+                    <!-- Scores -->
+                    <div class="grid grid-cols-4 gap-4" style="margin-bottom: 2rem;">
+                        <div class="stat-card text-center" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="score-circle" id="post-overall-circle">
+                                <span class="score-num" id="post-score-overall">0</span>
+                                <span class="score-denom">/ 100</span>
+                            </div>
+                            <div class="text-xs text-secondary uppercase font-bold">Health Score</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">Security Score</div>
+                            <div id="post-score-security" class="stat-value" style="font-size: 2rem; color: #38bdf8;">0</div>
+                            <div class="text-xs text-secondary mt-1">Headers, Cookies, TLS</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">Performance Score</div>
+                            <div id="post-score-perf" class="stat-value" style="font-size: 2rem; color: #34d399;">0</div>
+                            <div class="text-xs text-secondary mt-1">Latency & Resources</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 10px; padding: 1.25rem;">
+                            <div class="text-xs text-secondary">API Health Score</div>
+                            <div id="post-score-api" class="stat-value" style="font-size: 2rem; color: #a78bfa;">0</div>
+                            <div class="text-xs text-secondary mt-1">Status & Auth Guards</div>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry Cards -->
+                    <div class="grid grid-cols-3 gap-4" style="margin-bottom: 2rem;">
+                        <div class="card" style="padding: 1.25rem; background: rgba(0,0,0,0.2);">
+                            <h4 style="color: var(--accent-cyan); font-size: 0.95rem; margin-bottom: 0.75rem;">Performance Telemetry</h4>
+                            <div class="text-xs text-secondary">Response Time: <strong id="post-telemetry-latency" style="color: var(--text-primary)">0 ms</strong></div>
+                            <div class="text-xs text-secondary mt-1">HTML Size: <strong id="post-telemetry-size" style="color: var(--text-primary)">0 KB</strong></div>
+                            <div class="text-xs text-secondary mt-1">Resource Count: <strong id="post-telemetry-resources" style="color: var(--text-primary)">0</strong></div>
+                        </div>
+                        <div class="card" style="padding: 1.25rem; background: rgba(0,0,0,0.2);">
+                            <h4 style="color: var(--accent-violet); font-size: 0.95rem; margin-bottom: 0.75rem;">Third-Party & Ads</h4>
+                            <div class="text-xs text-secondary">External Domains: <strong id="post-telemetry-domains" style="color: var(--text-primary)">0</strong></div>
+                            <div class="text-xs text-secondary mt-1">Analytics Trackers: <strong id="post-telemetry-analytics" style="color: var(--text-primary)">0</strong></div>
+                            <div class="text-xs text-secondary mt-1">Ad Network Footprint: <strong id="post-telemetry-ads" style="color: var(--text-primary)">0</strong></div>
+                        </div>
+                        <div class="card" style="padding: 1.25rem; background: rgba(0,0,0,0.2);">
+                            <h4 style="color: var(--accent-blue); font-size: 0.95rem; margin-bottom: 0.75rem;">Authorized Resilience</h4>
+                            <div class="text-xs text-secondary mb-2" id="post-load-resilience-status">
+                                Active high-concurrency load testing requires verified domain ownership.
+                            </div>
+                            <button id="post-jump-to-load-btn" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.3rem 0.6rem;">
+                                Check Domain Verification
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Findings Section -->
+                    <div class="flex justify-between items-center mb-3" style="flex-wrap: wrap; gap: 0.75rem;">
+                        <h4>Live Scan Findings (<span id="post-findings-count">0</span>)</h4>
+                        <div class="flex gap-2 items-center">
+                            <div class="search-box">
+                                <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="post-search-input" class="form-control" placeholder="Search live findings..." oninput="filterFindingsBySearch('post')">
+                            </div>
+                            <div class="flex gap-1 text-xs" id="post-severity-filters">
+                                <button type="button" class="btn btn-secondary active" onclick="filterPostFindings('ALL')">ALL</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterPostFindings('CRITICAL')">CRITICAL</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterPostFindings('HIGH')">HIGH</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterPostFindings('MEDIUM')">MEDIUM</button>
+                                <button type="button" class="btn btn-secondary" onclick="filterPostFindings('PASS')">PASS</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="post-findings-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: RESILIENCE & LOAD TESTING (EXISTING FEATURES PRESERVED) -->
+        <section id="load-test-section" class="dashboard-section">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2>Authorized Load & Resilience Testing</h2>
+                    <p class="text-sm text-secondary">Bounded concurrent stress testing via Java ExecutorService for verified targets.</p>
+                </div>
+                <button class="btn btn-primary" onclick="showModal('add-target-modal')">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+                    Add / Verify Target
+                </button>
+            </div>
+
+            <!-- Targets Table -->
+            <div class="card" style="padding: 0; margin-bottom: 2rem;">
+                <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color);">
+                    <h3>Registered Targets</h3>
+                </div>
+                <div class="table-container">
+                    <table id="targets-table">
+                        <thead>
+                            <tr>
+                                <th>URL</th>
+                                <th>Ownership Status</th>
+                                <th>Registered</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- New Test Form + Live Telemetry -->
+            <div class="grid gap-6" style="grid-template-columns: 1fr 2fr;">
+                <div class="card">
+                    <h3>Configure Load Assessment</h3>
+                    <form id="new-test-form" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Verified Target URL</label>
+                            <select id="test-target" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Concurrency (1-50)</label>
+                            <input type="number" id="test-concurrency" class="form-control" min="1" max="50" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duration (seconds, 5-120)</label>
+                            <input type="number" id="test-duration" class="form-control" min="5" max="120" value="30" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Requests (10-5000)</label>
+                            <input type="number" id="test-max-reqs" class="form-control" min="10" max="5000" value="1000" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                            Start Resilience Assessment
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card" id="live-test-card" style="display: none; flex-direction: column;">
+                    <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+                        <h3>Live Telemetry Monitor</h3>
+                        <span id="live-status" class="badge badge-running">RUNNING</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4" style="margin-bottom: 1rem;">
+                        <div class="stat-card" style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div class="text-xs text-secondary">Requests Attempted</div>
+                            <div id="live-attempted" class="stat-value" style="font-size: 2rem;">0</div>
+                        </div>
+                        <div class="stat-card" style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div class="text-xs text-secondary">Successful</div>
+                            <div id="live-succeeded" class="stat-value" style="font-size: 2rem; color: var(--status-completed)">0</div>
+                        </div>
+                        <div class="stat-card" style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div class="text-xs text-secondary">Failed</div>
+                            <div id="live-failed" class="stat-value" style="font-size: 2rem; color: var(--status-failed)">0</div>
+                        </div>
+                        <div class="stat-card" style="padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div class="text-xs text-secondary">Avg Latency</div>
+                            <div id="live-latency" class="stat-value" style="font-size: 2rem; color: var(--accent-violet)">0ms</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between text-xs text-secondary">
+                            <span>Error Rate</span>
+                            <span id="live-error-rate-text">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="live-error-rate-bar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: auto; padding-top: 1rem; text-align: right;">
+                        <button id="stop-monitor-btn" class="btn btn-secondary">Stop Monitoring</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: HISTORICAL RESULTS & COMPARISON DIFF -->
+        <section id="history-section" class="dashboard-section">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2>Assessment History & Comparison Diffs</h2>
+                    <p class="text-sm text-secondary">Track readiness and health trends across scans, identify recurring or resolved findings, and compare versions.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary active" id="filter-hist-all" onclick="filterHistory('ALL')">All</button>
+                    <button class="btn btn-secondary" id="filter-hist-pre" onclick="filterHistory('BEFORE_DEPLOYMENT')">Before Deployment</button>
+                    <button class="btn btn-secondary" id="filter-hist-post" onclick="filterHistory('AFTER_DEPLOYMENT')">After Deployment</button>
+                    <button class="btn btn-primary" onclick="openDiffModal()" style="font-size: 0.8rem;">Compare Scans</button>
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <div class="card" style="padding: 0; margin-bottom: 2rem;">
+                <div class="table-container">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Target / Project</th>
+                                <th>Status</th>
+                                <th>Score</th>
+                                <th>Executed</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: ADD TARGET -->
+    <div id="add-target-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Register Target Domain</h3>
+                <button class="modal-close" onclick="hideModal('add-target-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-target-form">
+                    <div class="form-group">
+                        <label class="form-label">Target URL (e.g., https://example.com)</label>
+                        <input type="url" id="target-url" class="form-control" required>
+                    </div>
+                    <div class="text-xs text-secondary mb-3">
+                        To run high-concurrency resilience tests, you will place a verification token under:
+                        <code>/.well-known/veloshield-verification.txt</code>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" class="btn btn-secondary" onclick="hideModal('add-target-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Target</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: MITIGATION CONFIGURATIONS (EXISTING) -->
+    <div id="mitigation-modal" class="modal-overlay">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3>Recommended Defensive Mitigation Configuration</h3>
+                <button class="modal-close" onclick="hideModal('mitigation-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="text-sm text-secondary" style="margin-bottom: 1rem;" id="mitigation-summary"></p>
+                
+                <h4 style="margin-bottom: 0.5rem; color: var(--accent-blue);">Nginx Rate Limiting</h4>
+                <div class="code-block" style="margin-bottom: 1.5rem;">
+                    <button class="btn btn-secondary copy-btn" onclick="copyCode('nginx-code')">Copy</button>
+                    <code id="nginx-code"></code>
+                </div>
+
+                <h4 style="margin-bottom: 0.5rem; color: var(--accent-cyan);">Cloudflare WAF Rule</h4>
+                <div class="code-block">
+                    <button class="btn btn-secondary copy-btn" onclick="copyCode('cf-code')">Copy</button>
+                    <code id="cf-code"></code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: COMPARE SCANS DIFF -->
+    <div id="diff-modal" class="modal-overlay">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3>Compare Two Assessments</h3>
+                <button class="modal-close" onclick="hideModal('diff-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="form-group">
+                        <label class="form-label">Current Scan</label>
+                        <select id="diff-current-select" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Previous Baseline Scan</label>
+                        <select id="diff-prev-select" class="form-control"></select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="executeDiffComparison()" style="width: 100%; margin-bottom: 1.5rem;">
+                    Generate Comparison Diff
+                </button>
+
+                <div id="diff-results" style="display: none;">
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 1rem;">
+                            <div class="text-xs text-secondary">Score Differential</div>
+                            <div id="diff-score-change" class="stat-value" style="font-size: 1.75rem;">0</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 1rem;">
+                            <div class="text-xs text-secondary">New Findings</div>
+                            <div id="diff-new-count" class="stat-value" style="font-size: 1.75rem; color: var(--status-failed)">0</div>
+                        </div>
+                        <div class="stat-card" style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 1rem;">
+                            <div class="text-xs text-secondary">Resolved Findings</div>
+                            <div id="diff-resolved-count" class="stat-value" style="font-size: 1.75rem; color: var(--status-completed)">0</div>
+                        </div>
+                    </div>
+
+                    <h4>Finding Discrepancies</h4>
+                    <div id="diff-findings-breakdown" style="margin-top: 0.75rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Hidden compatibility elements for cached client scripts -->
+    <div style="display:none;" aria-hidden="true">
+        <span id="stat-verified-targets">0</span>
+        <span id="stat-total-tests">0</span>
+        <span id="stat-last-status">None</span>
+        <table id="recent-tests-table"><tbody></tbody></table>
+    </div>
+
+    <script src="js/config.js?v=2.2.0"></script>
+    <script src="js/api.js?v=2.2.0"></script>
+    <script src="js/dashboard.js?v=2.2.0"></script>
+</body>
+</html>

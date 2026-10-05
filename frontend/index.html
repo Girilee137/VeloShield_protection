@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloShield — Enterprise Web Security & Readiness Assessment</title>
+    <link rel="stylesheet" href="css/style.css?v=2.2.0">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Ambient decorative glow spheres -->
+        <div style="position: absolute; width: 450px; height: 450px; background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%); top: 10%; left: 15%; pointer-events: none; filter: blur(40px);"></div>
+        <div style="position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(6, 182, 212, 0.12), transparent 70%); bottom: 10%; right: 15%; pointer-events: none; filter: blur(40px);"></div>
+
+        <div class="card auth-card slide-up" style="max-width: 480px; padding: 2.5rem; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.85);">
+            <!-- Brand Logo & Header -->
+            <div class="auth-logo" style="margin-bottom: 1.75rem;">
+                <div class="flex justify-center items-center gap-3">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.25)); border: 1px solid rgba(99, 102, 241, 0.4); display: flex; align-items: center; justify-content: center;">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-glow">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M12 8v4"></path>
+                            <path d="M12 16h.01"></path>
+                        </svg>
+                    </div>
+                    <span style="font-size: 1.85rem; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        VeloShield
+                    </span>
+                </div>
+                <p class="text-secondary text-sm mt-2" style="font-weight: 400;">
+                    Automated Web Security, Performance & Deployment Readiness
+                </p>
+            </div>
+
+            <!-- Value Pillars -->
+            <div class="grid grid-cols-2 gap-2 mb-4" style="background: rgba(255, 255, 255, 0.02); padding: 0.75rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                    <span style="color: var(--accent-emerald)">✓</span> Secret Masking
+                </div>
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                    <span style="color: var(--accent-cyan)">✓</span> Live TLS & SSRF Guard
+                </div>
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                    <span style="color: var(--accent-indigo)">✓</span> Dual Pre/Post Workflows
+                </div>
+                <div class="flex items-center gap-2 text-xs text-secondary">
+                    <span style="color: var(--accent-violet)">✓</span> Bounded Load Testing
+                </div>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="tabs">
+                <button class="tab active" data-tab="login">Sign In</button>
+                <button class="tab" data-tab="register">Create Account</button>
+            </div>
+
+            <!-- LOGIN TAB -->
+            <div id="login-tab" class="tab-content active">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Account Email</label>
+                        <input type="email" id="login-email" class="form-control" required placeholder="admin@example.com" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="form-label" for="login-password" style="margin-bottom: 0;">Password</label>
+                            <button type="button" onclick="togglePasswordVisibility('login-password')" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:0.75rem;">Show</button>
+                        </div>
+                        <input type="password" id="login-password" class="form-control" required placeholder="••••••••" autocomplete="current-password">
+                    </div>
+                    <div id="login-error" class="text-xs" style="color: var(--status-failed); background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 6px; padding: 0.6rem; margin-bottom: 1rem; display: none;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">
+                        Sign In to Dashboard
+                    </button>
+                </form>
+            </div>
+
+            <!-- REGISTER TAB -->
+            <div id="register-tab" class="tab-content">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label class="form-label" for="register-email">Email Address</label>
+                        <input type="email" id="register-email" class="form-control" required placeholder="admin@example.com" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="form-label" for="register-password" style="margin-bottom: 0;">Password</label>
+                            <button type="button" onclick="togglePasswordVisibility('register-password')" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:0.75rem;">Show</button>
+                        </div>
+                        <input type="password" id="register-password" class="form-control" required placeholder="••••••••" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" class="form-control" required placeholder="••••••••" autocomplete="new-password">
+                    </div>
+                    <div id="register-error" class="text-xs" style="color: var(--status-failed); background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 6px; padding: 0.6rem; margin-bottom: 1rem; display: none;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">
+                        Create Free Account
+                    </button>
+                </form>
+            </div>
+
+            <!-- Quick Demo Credential Helper -->
+            <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 1rem;">
+                <span class="text-xs text-secondary">Evaluating VeloShield? </span>
+                <button type="button" onclick="fillDemoCredentials()" class="quick-chip" style="border: none; background: rgba(99, 102, 241, 0.15); color: #c7d2fe; font-weight: 600;">
+                    Fill Demo User
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js?v=2.2.0"></script>
+    <script src="js/api.js?v=2.2.0"></script>
+    <script src="js/auth.js?v=2.2.0"></script>
+</body>
+</html>
